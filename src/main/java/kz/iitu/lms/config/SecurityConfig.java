@@ -1,5 +1,6 @@
 package kz.iitu.lms.config;
 
+import kz.iitu.lms.service.iUserService;
 import kz.iitu.lms.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +15,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
+    private UserService iUserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/update/**").permitAll()
-                .antMatchers("/users/create").hasAuthority("ADMIN")
+                .antMatchers("/users/**").permitAll()
+                .antMatchers("/users/create").permitAll()
+                .antMatchers("/users/update").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 // What's the authenticationManager()?
@@ -41,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
+        auth.userDetailsService(iUserService)
                 .passwordEncoder(passwordEncoder());
     }
 }

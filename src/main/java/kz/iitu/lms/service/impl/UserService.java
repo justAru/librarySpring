@@ -21,12 +21,14 @@ public class UserService implements iUserService, UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User create(User o) {
-        return userRepository.save(o);
+    public User createUser(User o) {
+        o.setPassword(passwordEncoder.encode(o.getPassword()));
+         return userRepository.saveAndFlush(o);
     }
 
     @Override
     public User update(User o) {
+        o.setPassword(passwordEncoder.encode(o.getPassword()));
         return userRepository.save(o);
     }
 
@@ -50,11 +52,11 @@ public class UserService implements iUserService, UserDetailsService {
         return userRepository.getAllByFullNameContaining(name);
     }
 
-    @Override
-    public void createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.saveAndFlush(user);
-    }
+//    @Override
+//    public void createUser(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        userRepository.saveAndFlush(user);
+//    }
 
     @Override
     public void updateUser(Long id, User user) {

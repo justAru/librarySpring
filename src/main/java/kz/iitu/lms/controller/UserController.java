@@ -16,15 +16,14 @@ public class UserController {
     @Autowired
     private iUserService iUserService;
 
-
     @GetMapping("/users/{id}")
     public User get(@PathVariable Long id) {
         return iUserService.getById(id);
     }
 
     @PostMapping("/users/create")
-    public User create(@RequestBody User o){
-        return iUserService.create(o);
+    public User createUser(@RequestBody User o){
+       return iUserService.createUser(o);
     }
 
     @PutMapping("/users/update")
@@ -46,28 +45,6 @@ public class UserController {
         return iUserService.getAllByName(name);
     }
 
-    @GetMapping("/users/create/user")
-    public void createUserByUsernamePassword(String username,
-                                             String password) {
-        User user = new User();
-        user.setPassword(password);
-        user.setUsername(username);
-
-        iUserService.createUser(user);
-    }
-
-    @PutMapping("users/update/user/{id}")
-    public void updateUser(@PathVariable Long id,
-                           @RequestBody User user) {
-
-        System.out.println("UserController.updateUser");
-        System.out.println("id = " + id);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("authentication.getName() = " + authentication.getName());
-
-        iUserService.updateUser(id, user);
-    }
 }
 
 

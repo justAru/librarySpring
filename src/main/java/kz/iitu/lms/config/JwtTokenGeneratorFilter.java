@@ -29,30 +29,20 @@ public class JwtTokenGeneratorFilter extends UsernamePasswordAuthenticationFilte
     public JwtTokenGeneratorFilter(AuthenticationManager authManager) {
         this.authManager = authManager;
 
-        // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
-        // In our case, we use "/auth". So, we need to override the defaults.
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/auth/**", "POST"));
+
+        setFilterProcessesUrl("/users/auth");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        try {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-            // 1. Get credentials from request
-            User creds = new ObjectMapper().readValue(request.getInputStream(), User.class);
-
-            // 2. Create auth object (contains credentials) which will be used by auth manager
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    creds.getUsername(), creds.getPassword(), Collections.emptyList());
-
-            // 3. Authentication manager authenticate the user, and use UserDetialsServiceImpl::loadUserByUsername() method to load the user.
-            return authManager.authenticate(authToken);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                username,password);
+        return authManager.authenticate(authToken);
     }
 
     // Upon successful authentication, generate a token.
