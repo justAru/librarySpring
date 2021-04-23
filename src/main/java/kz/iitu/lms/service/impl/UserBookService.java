@@ -25,8 +25,8 @@ public class UserBookService implements iUserBookService {
     }
 
     @Override
-    public void delete(Userbooks o) {
-        userBookRepository.delete(o);
+    public void deleteById(Long id) {
+        userBookRepository.deleteById(id);
     }
 
     @Override

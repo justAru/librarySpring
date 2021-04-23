@@ -1,5 +1,6 @@
 package kz.iitu.lms.model;
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 
 import lombok.Data;
@@ -16,12 +17,13 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String desc;
+    private String info;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "authorId",insertable = false,updatable = false)
 
+    @JsonIgnore
     private User author;
     @Column(name = "authorId")
     private Long authorId;
@@ -41,12 +43,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getInfo() {
+        return info;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public User getAuthor() {
@@ -70,7 +72,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", desc='" + info + '\'' +
                 ", author=" + author +
                 ", authorId=" + authorId +
                 '}';

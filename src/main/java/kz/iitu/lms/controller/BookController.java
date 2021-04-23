@@ -14,11 +14,44 @@ public class BookController {
     @Autowired
     private iBookService iBookService;
 
-    public Book get(Long id) {
+    @GetMapping("/books/{id}")
+    public Book getById(@PathVariable Long id) {
         return iBookService.getById(id);
     }
 
-    public Book create(Book o){
+    @PostMapping("/books/create")
+    public Book create(@RequestBody Book o){
         return iBookService.create(o);
     }
+
+    @PostMapping("/books/update")
+    public Book update(@RequestBody Book o){
+        return iBookService.update(o);
+    }
+
+    @DeleteMapping("/books/delete/{id}")
+    public void delete(@PathVariable Long id) {
+        iBookService.delete(id);
+    }
+
+    @GetMapping("/books/all")
+    public List<Book> getAll(){
+       return iBookService.getAll();
+    }
+
+    @GetMapping("/books")
+    public List<Book> getAllByName(@Param(value = "name") String name){
+       return iBookService.getAllByName(name);
+    }
+
+    @GetMapping("/books/desc")
+    public List<Book> getAllByDesc(@Param(value = "info") String info){
+       return iBookService.getAllByDesc(info);
+    }
+
+    @GetMapping("/books/author")
+    public List<Book> getAllByAuthor(@Param(value = "id") Long id){
+       return iBookService.getAllByAuthor(id);
+    }
 }
+

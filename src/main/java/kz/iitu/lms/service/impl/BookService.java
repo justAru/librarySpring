@@ -45,8 +45,8 @@ public class BookService implements iBookService {
     }
 
     @Override
-    public List<Book> getAllByDesc(String desc) {
-        return bookRepository.getAllByInfoContaining(desc);
+    public List<Book> getAllByDesc(String info) {
+        return bookRepository.getAllByInfoContaining(info);
     }
 
     @Override

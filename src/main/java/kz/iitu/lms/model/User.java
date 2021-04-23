@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 @Table(name = "users")
 public class User {
+    @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

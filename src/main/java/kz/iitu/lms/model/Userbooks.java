@@ -16,6 +16,8 @@ public class Userbooks {
     @JoinColumn(name = "user_id",updatable = false,insertable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
 
+
+    @JsonIgnore
     private User user;
     @Column(name = "user_id")
     private Long userId;
@@ -23,6 +25,7 @@ public class Userbooks {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id",updatable = false,insertable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+
     @JsonIgnore
     private Book book;
     @Column(name = "book_id")
