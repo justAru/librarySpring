@@ -4,6 +4,8 @@ import kz.iitu.lms.model.User;
 import kz.iitu.lms.service.iUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +46,28 @@ public class UserController {
         return iUserService.getAllByName(name);
     }
 
+    @GetMapping("/users/create/user")
+    public void createUserByUsernamePassword(String username,
+                                             String password) {
+        User user = new User();
+        user.setPassword(password);
+        user.setUsername(username);
+
+        iUserService.createUser(user);
+    }
+
+    @PutMapping("users/update/user/{id}")
+    public void updateUser(@PathVariable Long id,
+                           @RequestBody User user) {
+
+        System.out.println("UserController.updateUser");
+        System.out.println("id = " + id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("authentication.getName() = " + authentication.getName());
+
+        iUserService.updateUser(id, user);
+    }
 }
 
 

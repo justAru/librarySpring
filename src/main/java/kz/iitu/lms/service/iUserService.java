@@ -11,5 +11,7 @@ public interface iUserService {
     User getById(Long id);
     List<User> getAll();
     List<User> getAllByName(String name);
+    void createUser(User user);
+    void updateUser(Long id, User user);
 
 }
