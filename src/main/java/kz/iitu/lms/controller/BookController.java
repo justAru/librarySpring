@@ -1,5 +1,6 @@
 package kz.iitu.lms.controller;
 
+import io.swagger.annotations.Api;
 import kz.iitu.lms.model.Book;
 import kz.iitu.lms.service.iBookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,47 +10,49 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/books")
+@Api(value = "User Controller class", description = "This class allows to interact with User object")
 public class BookController {
 
     @Autowired
     private iBookService iBookService;
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/{id}")
     public Book getById(@PathVariable Long id) {
         return iBookService.getById(id);
     }
 
-    @PostMapping("/books/create")
+    @PostMapping("/create")
     public Book create(@RequestBody Book o){
         return iBookService.create(o);
     }
 
-    @PostMapping("/books/update")
+    @PostMapping("/update")
     public Book update(@RequestBody Book o){
         return iBookService.update(o);
     }
 
-    @DeleteMapping("/books/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         iBookService.delete(id);
     }
 
-    @GetMapping("/books/all")
+    @GetMapping("/all")
     public List<Book> getAll(){
        return iBookService.getAll();
     }
 
-    @GetMapping("/books")
+    @GetMapping("/allByName")
     public List<Book> getAllByName(@Param(value = "name") String name){
        return iBookService.getAllByName(name);
     }
 
-    @GetMapping("/books/desc")
+    @GetMapping("/BYdesc")
     public List<Book> getAllByDesc(@Param(value = "info") String info){
        return iBookService.getAllByDesc(info);
     }
 
-    @GetMapping("/books/author")
+    @GetMapping("/BYauthor")
     public List<Book> getAllByAuthor(@Param(value = "id") Long id){
        return iBookService.getAllByAuthor(id);
     }
