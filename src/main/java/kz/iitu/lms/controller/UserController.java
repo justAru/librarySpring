@@ -1,5 +1,7 @@
 package kz.iitu.lms.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import kz.iitu.lms.model.User;
 import kz.iitu.lms.service.iUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
+@Api(value = "User Controller class", description = "This class allows to interact with User object")
 public class UserController {
 
     @Autowired
@@ -21,26 +25,27 @@ public class UserController {
         return iUserService.getById(id);
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/create")
     public User createUser(@RequestBody User o){
        return iUserService.createUser(o);
     }
 
-    @PutMapping("/users/update")
+    @PutMapping("/update")
     public User update(@RequestBody User o){
         return iUserService.update(o);
     }
 
-    @DeleteMapping("/users/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable Long id) {iUserService.deleteUserById(id);
     }
 
-    @GetMapping("/users/all")
+    @GetMapping("/all")
+    @ApiOperation(value = "Method to get list of users", response = List.class)
     public List<User> getAll() {
         return iUserService.getAll();
     }
 
-    @GetMapping("/users")
+    @GetMapping("/byName")
     public List<User> getAllByName(@Param(value = "name") String name) {
         return iUserService.getAllByName(name);
     }

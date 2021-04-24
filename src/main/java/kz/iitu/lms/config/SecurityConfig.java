@@ -23,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/users/**").permitAll()
-                .antMatchers("/users/create").permitAll()
-                .antMatchers("/users/update").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
+               // .antMatchers("/users/create").permitAll()
+                //.antMatchers("/users/update").hasAuthority("ADMIN")
+                .anyRequest().permitAll()
+                //.anyRequest().authenticated()
                 .and()
                 // What's the authenticationManager()?
                 // An object provided by WebSecurityConfigurerAdapter, used to authenticate the user passing user's credentials
